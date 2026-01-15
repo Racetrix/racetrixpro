@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="racing_bg">#121212</color>       <color name="racing_panel">#1E1E1E</color>    <color name="racing_green">#00E676</color>    <color name="racing_green_dim">#3300E676</color> <color name="racing_red">#FF1744</color>      <color name="racing_text_primary">#E0E0E0</color>
+    <color name="racing_text_secondary">#808080</color>
+
+    <color name="colorPrimary">@color/racing_panel</color>
+    <color name="colorPrimaryDark">@color/racing_bg</color>
+    <color name="colorAccent">@color/racing_green</color>
+
+    <color name="successGreen">@color/racing_green</color>
+    <color name="backgroundLight">@color/racing_text_primary</color>
+    <color name="textPrimary">@color/racing_text_primary</color>
+    <color name="textSecondary">@color/racing_text_secondary</color>
+
+    <color name="purple_200">@color/racing_green</color>
+    <color name="purple_500">@color/racing_panel</color>
+    <color name="purple_700">@color/racing_bg</color>
+    <color name="teal_200">@color/racing_green</color>
+    <color name="teal_700">@color/racing_green_dim</color>
+</resources>
