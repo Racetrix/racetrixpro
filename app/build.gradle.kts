@@ -8,16 +8,30 @@ android {
     namespace = "com.lition.racetrixpro"
     compileSdk = 36
 
+//    defaultConfig {
+//        applicationId = "com.lition.racetrixpro"
+//        minSdk = 33
+//        targetSdk = 36
+//        versionCode = 1
+//        versionName = "1.0"
+//
+//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//    }
     defaultConfig {
         applicationId = "com.lition.racetrixpro"
-        minSdk = 33
-        targetSdk = 36
+
+        // 【关键修改】改成 29 (Android 10) 或者 26 (Android 8.0)
+        // 这样 Android 10 的手机才能安装！
+        minSdk = 26
+
+        // 目标版本跟 compileSdk 保持一致
+        targetSdk = 35
+
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false

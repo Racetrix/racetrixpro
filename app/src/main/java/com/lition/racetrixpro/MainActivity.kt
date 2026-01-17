@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), BluetoothCallback {
@@ -390,15 +391,45 @@ class MainActivity : AppCompatActivity(), BluetoothCallback {
     // --- 辅助 ---
     private fun getCurrentFragment() = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
+//    private fun checkAndRequestPermissions() {
+//        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            arrayOf(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
+//        } else {
+//            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN)
+//        }
+//        ActivityCompat.requestPermissions(this, permissions, 1001)
+//    }
+// 在 MainActivity 类中添加这个检查函数
     private fun checkAndRequestPermissions() {
-        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            arrayOf(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
-        } else {
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN)
-        }
-        ActivityCompat.requestPermissions(this, permissions, 1001)
+    // 根据安卓版本，决定要申请哪些权限
+    val requiredPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        // Android 12 (S) 及以上：申请 新蓝牙权限 + 定位
+        arrayOf(
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    } else {
+        // Android 11 及以下：申请 定位权限 (旧蓝牙权限不需要动态申请)
+        arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
     }
 
+    // 检查是否有缺失的权限
+    val missingPermissions = requiredPermissions.filter {
+        ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+    }
+
+    if (missingPermissions.isNotEmpty()) {
+        // 如果有缺失，一次性申请
+        ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), 1001)
+    } else {
+        // 权限都齐了，可以初始化蓝牙扫描
+        // initBluetooth()
+    }
+}
     // 列表适配器 (内部类)
     inner class DeviceAdapter(
         context: Context,
